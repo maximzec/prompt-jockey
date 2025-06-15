@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Jockey</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">Prompt Jockey</div>
+    </header>
+    <main>
+        <div class="track-section">
+            <div class="track-bar" id="track-bar">
+                <div class="waveform-container">
+                    <canvas id="waveform"></canvas>
+                </div>
+            </div>
+            <button id="play-btn"></button>
+        </div>
+        <div class="sliders">
+            <div class="knob-group">
+                <label for="tempo">Темп</label>
+                <div class="knob-container">
+                    <div class="knob" id="tempo-knob" data-min="60" data-max="180" data-value="120">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">120</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="mood">Настроение</label>
+                <div class="knob-container">
+                    <div class="knob" id="mood-knob" data-min="0" data-max="100" data-value="50">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">50</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="complexity">Сложность</label>
+                <div class="knob-container">
+                    <div class="knob" id="complexity-knob" data-min="1" data-max="10" data-value="5">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">5</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="rock">Рок</label>
+                <div class="knob-container">
+                    <div class="knob" id="rock-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="jazz">Джаз</label>
+                <div class="knob-container">
+                    <div class="knob" id="jazz-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="blues">Блюз</label>
+                <div class="knob-container">
+                    <div class="knob" id="blues-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="classical">Классика</label>
+                <div class="knob-container">
+                    <div class="knob" id="classical-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="electronic">Электроника</label>
+                <div class="knob-container">
+                    <div class="knob" id="electronic-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="hiphop">Хип-хоп</label>
+                <div class="knob-container">
+                    <div class="knob" id="hiphop-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="reggae">Регги</label>
+                <div class="knob-container">
+                    <div class="knob" id="reggae-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="country">Кантри</label>
+                <div class="knob-container">
+                    <div class="knob" id="country-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="folk">Фолк</label>
+                <div class="knob-container">
+                    <div class="knob" id="folk-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="metal">Метал</label>
+                <div class="knob-container">
+                    <div class="knob" id="metal-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="punk">Панк</label>
+                <div class="knob-container">
+                    <div class="knob" id="punk-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="funk">Фанк</label>
+                <div class="knob-container">
+                    <div class="knob" id="funk-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="disco">Диско</label>
+                <div class="knob-container">
+                    <div class="knob" id="disco-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="techno">Техно</label>
+                <div class="knob-container">
+                    <div class="knob" id="techno-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="house">Хаус</label>
+                <div class="knob-container">
+                    <div class="knob" id="house-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="trance">Транс</label>
+                <div class="knob-container">
+                    <div class="knob" id="trance-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="ambient">Амбиент</label>
+                <div class="knob-container">
+                    <div class="knob" id="ambient-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="dubstep">Дабстеп</label>
+                <div class="knob-container">
+                    <div class="knob" id="dubstep-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="dnb">Драм-н-бейс</label>
+                <div class="knob-container">
+                    <div class="knob" id="dnb-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="ragtime">Рэгтайм</label>
+                <div class="knob-container">
+                    <div class="knob" id="ragtime-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="swing">Свинг</label>
+                <div class="knob-container">
+                    <div class="knob" id="swing-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="bebop">Бибоп</label>
+                <div class="knob-container">
+                    <div class="knob" id="bebop-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="fusion">Фьюжн</label>
+                <div class="knob-container">
+                    <div class="knob" id="fusion-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="latin">Латин</label>
+                <div class="knob-container">
+                    <div class="knob" id="latin-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="salsa">Сальса</label>
+                <div class="knob-container">
+                    <div class="knob" id="salsa-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="tango">Танго</label>
+                <div class="knob-container">
+                    <div class="knob" id="tango-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="flamenco">Фламенко</label>
+                <div class="knob-container">
+                    <div class="knob" id="flamenco-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="industrial">Индастриал</label>
+                <div class="knob-container">
+                    <div class="knob" id="industrial-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="gospel">Госпел</label>
+                <div class="knob-container">
+                    <div class="knob" id="gospel-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="soul">Соул</label>
+                <div class="knob-container">
+                    <div class="knob" id="soul-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="rnb">R&B</label>
+                <div class="knob-container">
+                    <div class="knob" id="rnb-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="ska">Ска</label>
+                <div class="knob-container">
+                    <div class="knob" id="ska-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="rockabilly">Рокабилли</label>
+                <div class="knob-container">
+                    <div class="knob" id="rockabilly-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="bluegrass">Блюграс</label>
+                <div class="knob-container">
+                    <div class="knob" id="bluegrass-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="grunge">Гранж</label>
+                <div class="knob-container">
+                    <div class="knob" id="grunge-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="alternative">Альтернатива</label>
+                <div class="knob-container">
+                    <div class="knob" id="alternative-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="indie">Инди</label>
+                <div class="knob-container">
+                    <div class="knob" id="indie-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="synthwave">Синтвейв</label>
+                <div class="knob-container">
+                    <div class="knob" id="synthwave-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="vaporwave">Вейпорвейв</label>
+                <div class="knob-container">
+                    <div class="knob" id="vaporwave-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="trap">Трэп</label>
+                <div class="knob-container">
+                    <div class="knob" id="trap-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="grime">Грайм</label>
+                <div class="knob-container">
+                    <div class="knob" id="grime-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="garage">Гараж</label>
+                <div class="knob-container">
+                    <div class="knob" id="garage-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="minimal">Минимал</label>
+                <div class="knob-container">
+                    <div class="knob" id="minimal-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="progressive">Прогрессив</label>
+                <div class="knob-container">
+                    <div class="knob" id="progressive-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="psytrance">Псай-транс</label>
+                <div class="knob-container">
+                    <div class="knob" id="psytrance-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="hardstyle">Хардстайл</label>
+                <div class="knob-container">
+                    <div class="knob" id="hardstyle-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="breakbeat">Брейкбит</label>
+                <div class="knob-container">
+                    <div class="knob" id="breakbeat-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="chillout">Чиллаут</label>
+                <div class="knob-container">
+                    <div class="knob" id="chillout-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="knob-group">
+                <label for="lofi">Ло-фай</label>
+                <div class="knob-container">
+                    <div class="knob" id="lofi-knob" data-min="0" data-max="100" data-value="0">
+                        <div class="knob-pointer"></div>
+                        <div class="knob-value">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="main.js"></script>
+</body>
+
+</html>

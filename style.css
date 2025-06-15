@@ -1,0 +1,478 @@
+/* Минималистичный черно-белый дизайн */
+body {
+    background: #ffffff;
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #000000;
+}
+
+header {
+    width: 100%;
+    padding: 24px 0 0 32px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: #000000;
+    text-transform: uppercase;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 60px;
+    padding: 0 20px;
+}
+
+.track-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.track-bar {
+    width: 100%;
+    height: clamp(100px, 8vw, 150px);
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 24px;
+    margin-top: 40px;
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.track-info {
+    display: none;
+    /* скрываем информацию о треке */
+}
+
+.track-key {
+    display: none;
+    /* скрываем ключ трека */
+}
+
+.bars-icon {
+    display: none;
+    /* скрываем иконку */
+}
+
+.waveform-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+}
+
+.track-bar #waveform {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.bar-markers {
+    display: none;
+    /* скрываем маркеры */
+}
+
+.bar-marker {
+    display: none;
+    /* скрываем маркеры */
+}
+
+.bar-marker.phrase {
+    display: none;
+    /* скрываем маркеры фраз */
+}
+
+.bar-marker.beat {
+    display: none;
+    /* скрываем маркеры битов */
+}
+
+.playhead {
+    display: none;
+    /* скрываем плейхед */
+}
+
+.tooltip {
+    display: none;
+    /* скрываем тултип */
+}
+
+/* Стили для разных уровней масштабирования */
+.track-bar[style*="--zoom-level"] .bar-marker.beat {
+    opacity: calc(var(--zoom-level, 1) * 0.7);
+}
+
+.track-bar[style*="--zoom-level"] .bar-marker {
+    font-size: calc(9px + (var(--zoom-level, 1) - 1) * 2px);
+}
+
+/* При большом масштабе делаем сетку более контрастной */
+.track-bar[style*="--zoom-level"] .bar-marker.phrase {
+    border-left-width: calc(2px + (var(--zoom-level, 1) - 1) * 1px);
+}
+
+.track-bar.playing {
+    border-color: #8b45b3;
+    background: #fafafa;
+    box-shadow: 0 2px 10px rgba(139, 69, 179, 0.1);
+}
+
+#play-btn {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    margin-bottom: 40px;
+    transition: all 0.3s ease;
+    outline: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#play-btn::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 20px solid #000000;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    transition: all 0.3s ease;
+    opacity: 1;
+    transform: scale(1);
+}
+
+#play-btn::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 20px;
+    background:
+        linear-gradient(to right, #000000 0%, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000 100%);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+}
+
+#play-btn:hover::before {
+    border-left-color: #333333;
+}
+
+#play-btn:hover::after {
+    background:
+        linear-gradient(to right, #333333 0%, #333333 25%, transparent 25%, transparent 75%, #333333 75%, #333333 100%);
+}
+
+#play-btn:hover {
+    transform: scale(1.1);
+}
+
+#play-btn:active {
+    transform: scale(0.95);
+}
+
+#play-btn.playing::before {
+    opacity: 0;
+    transform: scale(0.8);
+    border-left-color: #8b45b3;
+}
+
+#play-btn.playing::after {
+    opacity: 1;
+    transform: scale(1);
+    background:
+        linear-gradient(to right, #8b45b3 0%, #8b45b3 25%, transparent 25%, transparent 75%, #8b45b3 75%, #8b45b3 100%);
+}
+
+#play-btn.playing:hover::after {
+    background:
+        linear-gradient(to right, #9c4fc4 0%, #9c4fc4 25%, transparent 25%, transparent 75%, #9c4fc4 75%, #9c4fc4 100%);
+}
+
+.sliders {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 40px 48px;
+    width: 100%;
+    max-width: 1400px;
+    margin-top: 24px;
+    justify-items: center;
+    padding: 0 20px;
+}
+
+.knob-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.knob-group label {
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+    color: #000000;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.knob-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.knob {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #f0f0f0, #d0d0d0);
+    border: 1px solid #b0b0b0;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.15),
+        0 2px 4px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.knob:hover {
+    background: linear-gradient(145deg, #f5f5f5, #d5d5d5);
+    box-shadow:
+        0 6px 12px rgba(0, 0, 0, 0.2),
+        0 3px 6px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+        0 0 8px rgba(139, 69, 179, 0.3);
+}
+
+.knob:active {
+    transform: scale(0.98);
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.2),
+        0 1px 2px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.knob-pointer {
+    position: absolute;
+    width: 2px;
+    height: 18px;
+    background: linear-gradient(to bottom, #333333, #000000);
+    border-radius: 1px;
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%) rotate(0deg);
+    transform-origin: bottom center;
+    transition: all 0.1s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.knob:hover .knob-pointer {
+    background: linear-gradient(to bottom, #8b45b3, #6a3485);
+}
+
+.knob-value {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #000000;
+    min-width: 25px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2px 6px;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Marks around the knob */
+.knob::before {
+    content: '';
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: conic-gradient(from 135deg,
+            transparent 0deg,
+            rgba(0, 0, 0, 0.1) 1deg,
+            transparent 2deg,
+            transparent 26deg,
+            rgba(0, 0, 0, 0.1) 27deg,
+            transparent 28deg,
+            transparent 53deg,
+            rgba(0, 0, 0, 0.1) 54deg,
+            transparent 55deg,
+            transparent 80deg,
+            rgba(0, 0, 0, 0.1) 81deg,
+            transparent 82deg,
+            transparent 107deg,
+            rgba(0, 0, 0, 0.1) 108deg,
+            transparent 109deg,
+            transparent 134deg,
+            rgba(0, 0, 0, 0.1) 135deg,
+            transparent 136deg,
+            transparent 161deg,
+            rgba(0, 0, 0, 0.1) 162deg,
+            transparent 163deg,
+            transparent 188deg,
+            rgba(0, 0, 0, 0.1) 189deg,
+            transparent 190deg,
+            transparent 215deg,
+            rgba(0, 0, 0, 0.1) 216deg,
+            transparent 217deg,
+            transparent 242deg,
+            rgba(0, 0, 0, 0.1) 243deg,
+            transparent 244deg,
+            transparent 269deg,
+            rgba(0, 0, 0, 0.1) 270deg,
+            transparent 271deg,
+            transparent 296deg,
+            rgba(0, 0, 0, 0.1) 297deg,
+            transparent 298deg,
+            transparent 323deg,
+            rgba(0, 0, 0, 0.1) 324deg,
+            transparent 325deg,
+            transparent 350deg,
+            rgba(0, 0, 0, 0.1) 351deg,
+            transparent 352deg,
+            transparent 360deg);
+    z-index: -1;
+}
+
+/* Panel effect */
+.knob::after {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1), transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(0, 0, 0, 0.05), transparent 50%);
+    z-index: -2;
+}
+
+/* Remove old slider styles */
+input[type="range"] {
+    display: none;
+}
+
+input[type="range"]::-webkit-slider-track {
+    display: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    display: none;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    display: none;
+}
+
+input[type="range"]::-moz-range-thumb {
+    display: none;
+}
+
+.icon {
+    display: inline-block;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .track-bar {
+        height: clamp(80px, 10vw, 120px);
+        margin-bottom: 20px;
+        margin-top: 30px;
+    }
+
+    .track-info {
+        display: none;
+    }
+
+    .track-key {
+        display: none;
+    }
+
+    .bars-icon {
+        display: none;
+    }
+
+    .bar-marker {
+        display: none;
+    }
+
+    .tooltip {
+        display: none;
+    }
+
+    .sliders {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 24px 32px;
+        margin-top: 16px;
+        padding: 0 10px;
+    }
+
+    .knob {
+        width: 45px;
+        height: 45px;
+    }
+
+    .knob-pointer {
+        height: 16px;
+        top: 3px;
+    }
+
+    .knob::before {
+        width: 60px;
+        height: 60px;
+    }
+
+    .knob::after {
+        width: 65px;
+        height: 65px;
+    }
+
+    .knob-value {
+        bottom: -18px;
+        font-size: 0.7rem;
+    }
+
+    .knob-group label {
+        font-size: 0.75rem;
+        margin-bottom: 6px;
+    }
+}
